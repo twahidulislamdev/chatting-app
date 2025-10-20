@@ -2,6 +2,7 @@ import React from 'react';
 import Container from '../Container';
 import { FaGoogle, FaApple } from 'react-icons/fa';
 import LoginPage from '../../assets/loginPage.png';
+import { Link } from 'react-router-dom';
 
 const Login = () => {
   return (
@@ -26,21 +27,7 @@ const Login = () => {
 
             <form className="space-y-5">
               {/* Name Input */}
-              <div>
-                <label
-                  htmlFor="name"
-                  className="block text-sm font-medium text-gray-200"
-                >
-                  Name
-                </label>
-                <input
-                  type="text"
-                  id="name"
-                  className="mt-1 w-full bg-gray-700/50 border border-gray-600 text-white text-base rounded-md py-2 px-3 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-colors placeholder-gray-400"
-                  placeholder="Enter Your Name"
-                  required
-                />
-              </div>
+
 
               {/* Email Input */}
               <div>
@@ -112,12 +99,13 @@ const Login = () => {
             <div className="mt-4 text-center">
               <p className="text-sm text-gray-300">
                 No account yet?{' '}
-                <a
-                  href="#"
-                  className="text-indigo-400 hover:text-indigo-300 font-medium transition-colors"
-                >
-                  Create Account
-                </a>
+                <Link to={"/signup"}>
+                  <span
+                    className="text-indigo-400 hover:text-indigo-300 font-medium transition-colors"
+                  >
+                    Creat Account
+                  </span>
+                </Link>
               </p>
             </div>
 
