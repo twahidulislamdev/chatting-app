@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import toast, { Toaster } from "react-hot-toast";
 import Container from "../Container";
 import LoginPage from "../../assets/loginPage.png";
+import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 
 const SignUp = () => {
   const [userInfo, setUserInfo] = useState({
@@ -23,11 +24,27 @@ const SignUp = () => {
 
     if (!userInfo.name || !userInfo.email || !userInfo.password) {
       toast.error("Please fill all fields!");
-      return;
+    }
+    else {
+      const auth = getAuth();
+      createUserWithEmailAndPassword(auth, userInfo.email, userInfo.password)
+        .then((userCredential) => {
+          // Signed up 
+          toast.success("Account Created successfully")
+          const user = userCredential.user;
+          // ...
+        })
+        .catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          toast.error(errorMessage)
+          
+          // ..
+        });
+
     }
 
-    // ✅ Later you can add Firebase signup here
-    toast.success("Form submitted successfully!");
+
   };
 
   return (
@@ -133,7 +150,7 @@ const SignUp = () => {
                 {/* Button */}
                 <button
                   type="submit"
-                  className="w-full bg-indigo-600 text-white font-semibold text-lg py-2 rounded-md hover:bg-indigo-700 transition-colors focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                  className="w-full bg-indigo-600 text-white font-semibold text-lg py-2 rounded-md hover:bg-indigo-700 transition-colors focus:outline-none focus:ring-2 focus:ring-indigo-500 hover:cursor-pointer"
                 >
                   Sign Up
                 </button>
