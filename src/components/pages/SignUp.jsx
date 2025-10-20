@@ -1,66 +1,58 @@
-import React, { useState } from 'react';
-import Container from '../Container';
-import { FaGoogle, FaApple } from 'react-icons/fa';
-import LoginPage from '../../assets/loginPage.png';
-import { Link } from 'react-router-dom';
-import toast, { Toaster } from 'react-hot-toast';
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
+import toast, { Toaster } from "react-hot-toast";
+import Container from "../Container";
+import LoginPage from "../../assets/loginPage.png";
 
 const SignUp = () => {
   const [userInfo, setUserInfo] = useState({
     name: "",
     email: "",
-    password: ""
-  })
-  // Name 
-  const handleNameInput = (e) => {
-    setUserInfo((prev) => {
-      return { ...prev, name: e.target.value }
-    })
-  }
-  // Email 
-  const handleEmailInput = (e) => {
-    setUserInfo((prev) => {
-      return { ...prev, email: e.target.value }
-    })
-  }
-  // Password 
-  const handlePasswordInput = (e) => {
-    setUserInfo((prev) => {
-      return { ...prev, password: e.target.value }
-    })
-  }
-  // Submit 
+    password: "",
+  });
+
+  // Input Handlers
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setUserInfo((prev) => ({ ...prev, [name]: value }));
+  };
+
+  // Submit Handler
   const handleSignUpSubmit = (e) => {
-    e.preventDefault()
+    e.preventDefault();
+
     if (!userInfo.name || !userInfo.email || !userInfo.password) {
-      toast.error("This didn't work.")
+      toast.error("Please fill all fields!");
+      return;
     }
-  }
+
+    // ✅ Later you can add Firebase signup here
+    toast.success("Form submitted successfully!");
+  };
 
   return (
     <>
-      <Toaster />
+      <Toaster position="top-center" reverseOrder={false} />
       <div className="w-full h-full bg-gradient-to-br from-gray-800 to-gray-900 flex items-center justify-center py-5">
-        {/* Container with fixed width */}
         <Container className="w-[1280px]">
-          <div className="flex justify-between gap-5 p-10 bg-gray-800/80 rounded-lg">
+          <div className="flex justify-between gap-5 p-10 bg-gray-800/80 rounded-lg shadow-lg">
             {/* Image Section */}
             <div className="w-[60%] h-[600px]">
               <img
-                className="w-full h-full object-cover rounded-lg shadow-lg "
+                className="w-full h-full object-cover rounded-lg shadow-lg"
                 src={LoginPage}
-                alt="Login illustration"
+                alt="Sign Up"
               />
             </div>
 
             {/* Form Section */}
-            <div className="w-[40%] h-[600px]  backdrop-blur-sm p-8 rounded-lg">
+            <div className="w-[40%] h-[600px] backdrop-blur-sm p-8 rounded-lg">
               <h3 className="text-3xl font-bold text-white text-center mb-6">
-                Creat Account
+                Create Account
               </h3>
 
               <form onSubmit={handleSignUpSubmit} className="space-y-5">
-                {/* Name Input */}
+                {/* Name */}
                 <div>
                   <label
                     htmlFor="name"
@@ -69,16 +61,16 @@ const SignUp = () => {
                     Name
                   </label>
                   <input
-                    onChange={handleNameInput}
+                    onChange={handleInputChange}
                     type="text"
                     id="name"
-                    className="mt-1 w-full bg-gray-700/50 border border-gray-600 text-white text-base rounded-md py-2 px-3 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-colors placeholder-gray-400"
-                    placeholder="Enter Your Name"
-
+                    name="name"
+                    className="mt-1 w-full bg-gray-700/50 border border-gray-600 text-white text-base rounded-md py-2 px-3 focus:outline-none focus:ring-2 focus:ring-indigo-500 placeholder-gray-400"
+                    placeholder="Enter your name"
                   />
                 </div>
 
-                {/* Email Input */}
+                {/* Email */}
                 <div>
                   <label
                     htmlFor="email"
@@ -87,16 +79,16 @@ const SignUp = () => {
                     Email
                   </label>
                   <input
-                    onChange={handleEmailInput}
+                    onChange={handleInputChange}
                     type="email"
                     id="email"
-                    className="mt-1 w-full bg-gray-700/50 border border-gray-600 text-white text-base rounded-md py-2 px-3 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-colors placeholder-gray-400"
+                    name="email"
+                    className="mt-1 w-full bg-gray-700/50 border border-gray-600 text-white text-base rounded-md py-2 px-3 focus:outline-none focus:ring-2 focus:ring-indigo-500 placeholder-gray-400"
                     placeholder="name@gmail.com"
-
                   />
                 </div>
 
-                {/* Password Input */}
+                {/* Password */}
                 <div>
                   <label
                     htmlFor="password"
@@ -105,16 +97,16 @@ const SignUp = () => {
                     Password
                   </label>
                   <input
-                    onChange={handlePasswordInput}
+                    onChange={handleInputChange}
                     type="password"
                     id="password"
-                    className="mt-1 w-full bg-gray-700/50 border border-gray-600 text-white text-base rounded-md py-2 px-3 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-colors placeholder-gray-400"
+                    name="password"
+                    className="mt-1 w-full bg-gray-700/50 border border-gray-600 text-white text-base rounded-md py-2 px-3 focus:outline-none focus:ring-2 focus:ring-indigo-500 placeholder-gray-400"
                     placeholder="••••••••"
-
                   />
                 </div>
 
-                {/* Checkbox + Forgot Password */}
+                {/* Remember + Forgot */}
                 <div className="flex justify-between items-center">
                   <div className="flex items-center">
                     <input
@@ -129,15 +121,16 @@ const SignUp = () => {
                       Remember me
                     </label>
                   </div>
-                  <a
-                    href="#"
-                    className="text-sm text-indigo-400 hover:text-indigo-300 transition-colors"
+
+                  <button
+                    type="button"
+                    className="text-sm text-indigo-400 hover:text-indigo-300"
                   >
                     Forgot Password?
-                  </a>
+                  </button>
                 </div>
 
-                {/* Submit Button */}
+                {/* Button */}
                 <button
                   type="submit"
                   className="w-full bg-indigo-600 text-white font-semibold text-lg py-2 rounded-md hover:bg-indigo-700 transition-colors focus:outline-none focus:ring-2 focus:ring-indigo-500"
@@ -146,14 +139,12 @@ const SignUp = () => {
                 </button>
               </form>
 
-              {/* Create Account */}
+              {/* Already have account */}
               <div className="mt-4 text-center">
                 <p className="text-sm text-gray-300">
-                  You have an account?{' '}
-                  <Link to={"/login"}>
-                    <span
-                      className="text-indigo-400 hover:text-indigo-300 font-medium transition-colors"
-                    >
+                  Already have an account?{" "}
+                  <Link to="/login">
+                    <span className="text-indigo-400 hover:text-indigo-300 font-medium">
                       Login
                     </span>
                   </Link>
@@ -164,7 +155,7 @@ const SignUp = () => {
         </Container>
       </div>
     </>
-  )
-}
+  );
+};
 
-export default SignUp
+export default SignUp;
