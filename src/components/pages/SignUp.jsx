@@ -24,27 +24,23 @@ const SignUp = () => {
 
     if (!userInfo.name || !userInfo.email || !userInfo.password) {
       toast.error("Please fill all fields!");
-    }
-    else {
+    } else {
       const auth = getAuth();
       createUserWithEmailAndPassword(auth, userInfo.email, userInfo.password)
         .then((userCredential) => {
-          // Signed up 
-          toast.success("Account Created successfully")
+          // Signed up
+          toast.success("Account Created successfully");
           const user = userCredential.user;
           // ...
         })
         .catch((error) => {
           const errorCode = error.code;
           const errorMessage = error.message;
-          toast.error(errorMessage)
-          
+          toast.error(errorMessage);
+
           // ..
         });
-
     }
-
-
   };
 
   return (
