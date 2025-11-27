@@ -1,8 +1,8 @@
-import React from 'react';
-import Container from '../Container';
-import { FaGoogle, FaApple } from 'react-icons/fa';
-import LoginPage from '../../assets/loginPage.png';
-import { Link } from 'react-router-dom';
+import React from "react";
+import Container from "../Container";
+import { FaGoogle, FaApple } from "react-icons/fa";
+import LoginPage from "../../assets/loginPage.png";
+import { Link } from "react-router-dom";
 
 const Login = () => {
   return (
@@ -27,7 +27,6 @@ const Login = () => {
 
             <form className="space-y-5">
               {/* Name Input */}
-
 
               {/* Email Input */}
               <div>
@@ -98,11 +97,9 @@ const Login = () => {
             {/* Create Account */}
             <div className="mt-4 text-center">
               <p className="text-sm text-gray-300">
-                No account yet?{' '}
+                No account yet?{" "}
                 <Link to={"/signup"}>
-                  <span
-                    className="text-indigo-400 hover:text-indigo-300 font-medium transition-colors"
-                  >
+                  <span className="text-indigo-400 hover:text-indigo-300 font-medium transition-colors">
                     Creat Account
                   </span>
                 </Link>
