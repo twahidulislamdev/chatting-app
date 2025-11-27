@@ -1,9 +1,9 @@
 import React, { useState } from "react";
+import Container from "../Container";
+import { FaGoogle, FaApple } from "react-icons/fa";
+import LoginPage from "../../assets/loginPage.png";
 import { Link } from "react-router-dom";
 import toast, { Toaster } from "react-hot-toast";
-import Container from "../Container";
-import LoginPage from "../../assets/loginPage.png";
-import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 
 const SignUp = () => {
   const [userInfo, setUserInfo] = useState({
@@ -11,61 +11,56 @@ const SignUp = () => {
     email: "",
     password: "",
   });
-
-  // Input Handlers
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setUserInfo((prev) => ({ ...prev, [name]: value }));
+  // Name
+  const handleNameInput = (e) => {
+    setUserInfo((prev) => {
+      return { ...prev, name: e.target.value };
+    });
   };
-
-  // Submit Handler
+  // Email
+  const handleEmailInput = (e) => {
+    setUserInfo((prev) => {
+      return { ...prev, email: e.target.value };
+    });
+  };
+  // Password
+  const handlePasswordInput = (e) => {
+    setUserInfo((prev) => {
+      return { ...prev, password: e.target.value };
+    });
+  };
+  // Submit
   const handleSignUpSubmit = (e) => {
     e.preventDefault();
-
     if (!userInfo.name || !userInfo.email || !userInfo.password) {
-      toast.error("Please fill all fields!");
-    } else {
-      const auth = getAuth();
-      createUserWithEmailAndPassword(auth, userInfo.email, userInfo.password)
-        .then((userCredential) => {
-          // Signed up
-          toast.success("Account Created successfully");
-          const user = userCredential.user;
-          // ...
-        })
-        .catch((error) => {
-          const errorCode = error.code;
-          const errorMessage = error.message;
-          toast.error(errorMessage);
-
-          // ..
-        });
+      toast.error("This didn't work.");
     }
   };
 
   return (
     <>
-      <Toaster position="top-center" reverseOrder={false} />
+      <Toaster />
       <div className="w-full h-full bg-gradient-to-br from-gray-800 to-gray-900 flex items-center justify-center py-5">
+        {/* Container with fixed width */}
         <Container className="w-[1280px]">
-          <div className="flex justify-between gap-5 p-10 bg-gray-800/80 rounded-lg shadow-lg">
+          <div className="flex justify-between gap-5 p-10 bg-gray-800/80 rounded-lg">
             {/* Image Section */}
             <div className="w-[60%] h-[600px]">
               <img
-                className="w-full h-full object-cover rounded-lg shadow-lg"
+                className="w-full h-full object-cover rounded-lg shadow-lg "
                 src={LoginPage}
-                alt="Sign Up"
+                alt="Login illustration"
               />
             </div>
 
             {/* Form Section */}
-            <div className="w-[40%] h-[600px] backdrop-blur-sm p-8 rounded-lg">
-              <h3 className="text-3xl font-bold text-white text-center mb-6">
-                Create Account
+            <div className="w-[40%] h-[600px]  backdrop-blur-sm p-8 rounded-lg">
+              <h3 className="text-3xl font-bold text-white text-center mb-5">
+                Creat Account
               </h3>
 
               <form onSubmit={handleSignUpSubmit} className="space-y-5">
-                {/* Name */}
+                {/* Name Input */}
                 <div>
                   <label
                     htmlFor="name"
@@ -74,16 +69,15 @@ const SignUp = () => {
                     Name
                   </label>
                   <input
-                    onChange={handleInputChange}
+                    onChange={handleNameInput}
                     type="text"
                     id="name"
-                    name="name"
-                    className="mt-1 w-full bg-gray-700/50 border border-gray-600 text-white text-base rounded-md py-2 px-3 focus:outline-none focus:ring-2 focus:ring-indigo-500 placeholder-gray-400"
-                    placeholder="Enter your name"
+                    className="mt-1 w-full bg-gray-700/50 border border-gray-600 text-white text-base rounded-md py-2 px-3 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-colors placeholder-gray-400"
+                    placeholder="Enter Your Name"
                   />
                 </div>
 
-                {/* Email */}
+                {/* Email Input */}
                 <div>
                   <label
                     htmlFor="email"
@@ -92,16 +86,15 @@ const SignUp = () => {
                     Email
                   </label>
                   <input
-                    onChange={handleInputChange}
+                    onChange={handleEmailInput}
                     type="email"
                     id="email"
-                    name="email"
-                    className="mt-1 w-full bg-gray-700/50 border border-gray-600 text-white text-base rounded-md py-2 px-3 focus:outline-none focus:ring-2 focus:ring-indigo-500 placeholder-gray-400"
+                    className="mt-1 w-full bg-gray-700/50 border border-gray-600 text-white text-base rounded-md py-2 px-3 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-colors placeholder-gray-400"
                     placeholder="name@gmail.com"
                   />
                 </div>
 
-                {/* Password */}
+                {/* Password Input */}
                 <div>
                   <label
                     htmlFor="password"
@@ -110,16 +103,15 @@ const SignUp = () => {
                     Password
                   </label>
                   <input
-                    onChange={handleInputChange}
+                    onChange={handlePasswordInput}
                     type="password"
                     id="password"
-                    name="password"
-                    className="mt-1 w-full bg-gray-700/50 border border-gray-600 text-white text-base rounded-md py-2 px-3 focus:outline-none focus:ring-2 focus:ring-indigo-500 placeholder-gray-400"
+                    className="mt-1 w-full bg-gray-700/50 border border-gray-600 text-white text-base rounded-md py-2 px-3 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-colors placeholder-gray-400"
                     placeholder="••••••••"
                   />
                 </div>
 
-                {/* Remember + Forgot */}
+                {/* Checkbox + Forgot Password */}
                 <div className="flex justify-between items-center">
                   <div className="flex items-center">
                     <input
@@ -134,30 +126,29 @@ const SignUp = () => {
                       Remember me
                     </label>
                   </div>
-
-                  <button
-                    type="button"
-                    className="text-sm text-indigo-400 hover:text-indigo-300"
+                  <a
+                    href="#"
+                    className="text-sm text-indigo-400 hover:text-indigo-300 transition-colors"
                   >
                     Forgot Password?
-                  </button>
+                  </a>
                 </div>
 
-                {/* Button */}
+                {/* Submit Button */}
                 <button
                   type="submit"
-                  className="w-full bg-indigo-600 text-white font-semibold text-lg py-2 rounded-md hover:bg-indigo-700 transition-colors focus:outline-none focus:ring-2 focus:ring-indigo-500 hover:cursor-pointer"
+                  className="w-full bg-indigo-600 text-white font-semibold text-lg py-2 rounded-md hover:bg-indigo-700 transition-colors focus:outline-none focus:ring-2 focus:ring-indigo-500"
                 >
                   Sign Up
                 </button>
               </form>
 
-              {/* Already have account */}
+              {/* Create Account */}
               <div className="mt-4 text-center">
                 <p className="text-sm text-gray-300">
-                  Already have an account?{" "}
-                  <Link to="/login">
-                    <span className="text-indigo-400 hover:text-indigo-300 font-medium">
+                  You have an account?{" "}
+                  <Link to={"/login"}>
+                    <span className="text-indigo-400 hover:text-indigo-300 font-medium transition-colors">
                       Login
                     </span>
                   </Link>
